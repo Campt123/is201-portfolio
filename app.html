@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Explore a savings goal with monthly deposits, compound growth, and scenario comparisons.">
+  <title>Goalpath | Savings-goal simulator</title>
+  <link rel="icon" href="assets/monogram.svg" type="image/svg+xml">
+  <style>
+    /* Single-file app: all app styles and logic live here. */
+    *{box-sizing:border-box}body{margin:0;background:#f6f4ed;color:#203b3e;font:16px/1.6 Arial,Helvetica,sans-serif}a{color:#22594b;text-underline-offset:4px}header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;padding:20px 5vw;border-bottom:1px solid #cad3c9}.wordmark{font:bold 22px Georgia,serif;text-decoration:none;color:#152e32}header nav{display:flex;gap:22px;font-size:13px}.wrap{max-width:1300px;margin:auto;padding:42px 5vw 70px}h1,h2,h3{font-family:Georgia,serif;font-weight:400;line-height:1.2;color:#152e32}h1{font-size:clamp(2.7rem,5vw,4.5rem);letter-spacing:-.04em;margin:0 0 15px}h2{font-size:1.6rem;margin:0 0 18px}h3{font-size:1.3rem;margin:0 0 10px}.eyebrow{font-size:10px;letter-spacing:.18em;font-weight:bold;color:#38634f;margin:0 0 15px}.intro{max-width:650px;margin:0 0 30px;color:#536a6b}.grid{display:grid;grid-template-columns:310px minmax(0,1fr);gap:26px}.panel{background:white;border:1px solid #d8ded4;border-radius:8px;padding:26px}.controls{align-self:start}.field{margin:0 0 16px}.field label{display:block;font-size:12px;font-weight:bold;margin-bottom:6px}.input-wrap{display:flex;align-items:center;border:1px solid #a9bcb1;border-radius:4px;overflow:hidden}.input-wrap span{font-size:13px;color:#5c7473;padding:0 12px}.input-wrap input{border:0;min-width:0}.field input{width:100%;padding:11px 12px;background:#fbfcf9;color:#183b32;font:16px Arial,sans-serif}.field>input{border:1px solid #a9bcb1;border-radius:4px}.hint{font-size:11px;color:#627574;margin:5px 0 0}button{cursor:pointer;font:700 13px Arial,sans-serif;border-radius:4px;padding:12px 16px;border:1px solid #22594b;background:#22594b;color:white;min-height:44px}button:hover{background:#152e32}.secondary{background:transparent;color:#22594b}.secondary:hover{background:#e8eee4;color:#152e32}.form-actions{display:flex;gap:10px;flex-wrap:wrap}.form-actions button:first-child{flex:1}.error{color:#a12d26;font-size:13px;margin-top:14px}.result-head{display:flex;justify-content:space-between;gap:20px}.badge{font-size:10px;letter-spacing:.08em;border:1px solid #bacbbd;padding:6px 10px;align-self:start;border-radius:30px;white-space:nowrap}.amount{font:clamp(2.4rem,5vw,3.6rem)/1.15 Georgia,serif;letter-spacing:-.04em;margin:8px 0;color:#173e32}.summary{font-size:13px;color:#526e66;margin-bottom:22px}.metrics{display:grid;grid-template-columns:repeat(3,1fr);border-block:1px solid #d8ded4;padding:18px 0;gap:14px}.metrics span{display:block;font-size:10px;letter-spacing:.04em;color:#526e66}.metrics strong{font-size:17px;color:#183b32;display:block;margin-top:4px}.chart{width:100%;height:auto;display:block;margin:22px 0 12px}.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:11px}.legend span::before{content:'';display:inline-block;width:16px;height:3px;background:#22594b;margin:0 7px 3px 0}.legend span:last-child::before{background:#9b6b28}.next-step{background:#edf2e9;border-left:3px solid #769477;padding:18px 20px;margin-top:22px;font-size:13px}.next-step p{margin:0 0 10px}.next-step button{font-size:12px;padding:9px 14px}.comparison{margin-top:26px}.comparison .row{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}.compare-input{display:flex;align-items:center;gap:10px;font-size:12px}.compare-input input{max-width:100px;padding:10px;border:1px solid #a9bcb1;border-radius:4px;font:16px Arial,sans-serif}.scenario-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px}.scenario{background:#f7f8f3;border-radius:4px;padding:18px}.scenario p{font-size:12px;margin:6px 0}.scenario strong{font-size:22px}.difference{font-size:13px;margin:18px 0 0}.details{margin-top:26px}.details summary{cursor:pointer;font-weight:bold;padding:8px 0}table{border-collapse:collapse;width:100%;font-size:12px;margin-top:16px}th,td{text-align:right;padding:12px 6px;border-bottom:1px solid #d8ded4}th:first-child,td:first-child{text-align:left}caption{text-align:left;font-size:12px;color:#526e66;margin-bottom:8px}.table-scroll{overflow:auto}.method{margin-top:24px;padding-top:20px;border-top:1px solid #d8ded4;font-size:12px;color:#526e66}.method p{margin:0 0 12px}.method h3{font-size:1rem}.download{margin-top:15px}footer{display:flex;gap:18px;flex-wrap:wrap;justify-content:space-between;border-top:1px solid #cad3c9;padding:22px 5vw;font-size:12px}.skip{position:fixed;top:-100px;left:10px;background:white;z-index:10;padding:12px}.skip:focus{top:10px}:focus-visible{outline:3px solid #b07733;outline-offset:3px}[hidden]{display:none!important}.stale{opacity:.5}
+    @media(max-width:1000px){.grid{grid-template-columns:270px minmax(0,1fr)}.wrap{padding-inline:4vw}.panel{padding:20px}.metrics{grid-template-columns:1fr;gap:12px}.metrics>div{display:flex;justify-content:space-between;align-items:center}.metrics strong{margin:0}.result-head{flex-wrap:wrap;gap:8px}}
+    @media(max-width:730px){.grid{grid-template-columns:1fr}.wrap{padding:30px 6vw}.panel{padding:20px}.controls form{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}.form-actions,.error{grid-column:1/-1}.scenario-grid{grid-template-columns:1fr}.comparison .row{align-items:flex-start}.metrics{grid-template-columns:1fr}.result-head{flex-wrap:nowrap}header{padding:16px 6vw}header nav{font-size:12px}.badge{font-size:9px}.amount{font-size:2.7rem}.metrics strong{font-size:16px}}
+    @media(max-width:370px){.controls form{display:block}.panel{padding:17px}.result-head{flex-wrap:wrap}.chart{margin-left:-5px;width:calc(100% + 10px)}}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to simulator</a>
+  <header><a class="wordmark" href="app.html">Goalpath<span aria-hidden="true"> ↗</span></a><nav aria-label="Main navigation"><a href="scratch.html">Finance field notes</a><a href="index.html">Portfolio</a></nav></header>
+  <main class="wrap" id="main">
+    <p class="eyebrow">A SAVINGS-GOAL SIMULATOR</p><h1>Make room for your next goal.</h1><p class="intro">Explore a plan. Compare a small change. See how your deposits and time could work together.</p>
+    <div class="grid">
+      <section class="panel controls" aria-labelledby="plan-heading"><h2 id="plan-heading">Your starting point</h2>
+        <form id="plan-form">
+          <div class="field"><label for="goal">Savings goal</label><div class="input-wrap"><span>$</span><input id="goal" name="goal" type="number" min="1" max="100000000" step="0.01" value="10000" required></div></div>
+          <div class="field"><label for="initial">Already saved</label><div class="input-wrap"><span>$</span><input id="initial" name="initial" type="number" min="0" max="100000000" step="0.01" value="1000" required></div></div>
+          <div class="field"><label for="deposit">Monthly deposit</label><div class="input-wrap"><span>$</span><input id="deposit" name="deposit" type="number" min="0" max="1000000" step="0.01" value="150" required></div></div>
+          <div class="field"><label for="rate">Annual interest rate</label><div class="input-wrap"><input id="rate" name="rate" type="number" min="0" max="20" step="0.01" value="4" required aria-describedby="rate-help"><span>%</span></div><p class="hint" id="rate-help">Illustrative rate, compounded monthly.</p></div>
+          <div class="field"><label for="years">Time horizon (years)</label><input id="years" name="years" type="number" min="1" max="50" step="1" value="4" required></div>
+          <div class="form-actions"><button type="submit">Calculate my plan</button><button class="secondary" id="reset" type="button">Reset</button></div>
+          <p id="error" class="error" role="alert" hidden></p>
+        </form>
+        <div class="method"><h3>How this works</h3><p>Interest is added each month at the annual rate divided by 12. Deposits arrive at the end of each month. Results use a constant rate and do not include taxes, fees, or inflation.</p><p>This is an educational illustration, not a guarantee of returns. All entries stay in this browser page; nothing is stored or sent.</p></div>
+      </section>
+      <div id="results">
+        <section class="panel" aria-labelledby="result-title"><div class="result-head"><h2 class="eyebrow" id="result-title">YOUR PROJECTED BALANCE</h2><span class="badge" id="status-badge">BASE PLAN</span></div><div id="live-results" aria-live="polite"><p class="amount" id="balance"></p><p class="summary" id="summary"></p></div>
+          <div class="metrics"><div><span>YOUR CONTRIBUTIONS</span><strong id="contributed"></strong></div><div><span>PROJECTED INTEREST</span><strong id="interest"></strong></div><div><span>GOAL REACHED</span><strong id="reached"></strong></div></div>
+          <svg id="chart" class="chart" viewBox="0 0 640 285" role="img" aria-labelledby="chart-title chart-desc"><title id="chart-title">Savings over time</title><desc id="chart-desc">Projected balance and total contributions over the selected time horizon.</desc></svg>
+          <div class="legend"><span>Projected balance</span><span>Your contributions</span></div>
+          <div class="next-step"><p id="required-note"></p><button type="button" class="secondary" id="use-required">Use this monthly deposit</button></div>
+        </section>
+        <section class="panel comparison" aria-labelledby="compare-title"><div class="row"><div><p class="eyebrow">ONE SMALL CHANGE</p><h2 id="compare-title">Compare the possibilities.</h2></div><div class="compare-input"><label for="extra">Extra $ / month</label><input id="extra" type="number" min="0" max="1000000" step="0.01" value="50"></div></div><div class="scenario-grid"><div class="scenario"><h3>Base plan</h3><strong id="base-balance"></strong><p id="base-description"></p></div><div class="scenario"><h3>A little extra</h3><strong id="extra-balance"></strong><p id="extra-description"></p></div></div><p class="difference" id="difference" aria-live="polite"></p><p class="error" id="extra-error" role="alert" hidden>Enter an extra deposit from $0 to $1,000,000, with no more than two decimal places.</p></section>
+        <div class="panel details"><details><summary>See the year-by-year breakdown</summary><div class="table-scroll"><table><caption>End-of-year values, rounded for display.</caption><thead><tr><th scope="col">Year</th><th scope="col">Contributions</th><th scope="col">Interest</th><th scope="col">Balance</th></tr></thead><tbody id="year-table"></tbody></table></div><button type="button" class="secondary download" id="download">Download breakdown (CSV)</button></details></div>
+      </div>
+    </div>
+  </main>
+  <footer><span>Christian Hoth · IS 201</span><a href="scratch.html">Back to finance field notes ↑</a></footer>
+  <script>
+    'use strict';
+    // A transparent, monthly recurrence: interest first, deposit at month end.
+    function project(initial, monthly, annual, months, goal) {
+      const r = annual / 100 / 12;
+      let balance = initial, reached = initial >= goal ? 0 : null;
+      const points = [{month:0,balance,contributed:initial}];
+      for(let m=1;m<=months;m++) {
+        balance=balance*(1+r)+monthly;
+        if(reached===null && balance+0.0000001>=goal) reached=m;
+        points.push({month:m,balance,contributed:initial+monthly*m});
+      }
+      return {points,balance,contributed:initial+monthly*months,reached};
+    }
+    function neededDeposit(initial, goal, annual, months) {
+      const r=annual/100/12;
+      if(r===0) return Math.max(0,(goal-initial)/months);
+      const growth=Math.pow(1+r,months);
+      return Math.max(0,(goal-initial*growth)/((growth-1)/r));
+    }
+    const $=id=>document.getElementById(id);
+    const money=n=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0}).format(n);
+    const exactMoney=n=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD'}).format(n);
+    const when=m=>m===0?'Already reached':m===null?'Beyond this horizon':(m<12?m+' month'+(m===1?'':'s'):Math.floor(m/12)+' yr'+(m%12?' '+m%12+' mo':''));
+    let current, base, needed;
+    function readPlan(){return {goal:Number($('goal').value),initial:Number($('initial').value),monthly:Number($('deposit').value),annual:Number($('rate').value),months:Number($('years').value)*12};}
+    function drawChart(data){
+      const svg=$('chart'), ns='http://www.w3.org/2000/svg';
+      svg.replaceChildren();
+      const add=(name,attrs,text)=>{const el=document.createElementNS(ns,name);for(const[k,v]of Object.entries(attrs))el.setAttribute(k,v);if(text!==undefined)el.textContent=text;svg.append(el);return el;};
+      add('title',{id:'chart-title'},'Savings over time');add('desc',{id:'chart-desc'},'Starting at '+money(current.initial)+', the balance reaches '+money(data.balance)+' after '+current.months/12+' years. Total contributions: '+money(data.contributed)+'.');
+      const max=Math.max(data.balance,data.contributed,1)*1.1;
+      const x=m=>66+m/current.months*552, y=v=>240-v/max*215;
+      const compact=n=>new Intl.NumberFormat('en-US',{notation:'compact',maximumFractionDigits:1}).format(n);
+      for(let i=0;i<5;i++){const v=max*i/4, yy=y(v);add('line',{x1:66,x2:618,y1:yy,y2:yy,stroke:'#dce3d8'});add('text',{x:56,y:yy+4,'text-anchor':'end',fill:'#526e66','font-size':11},'$'+compact(v));}
+      for(let i=0;i<=4;i++){const m=current.months*i/4;add('text',{x:x(m),y:268,'text-anchor':'middle',fill:'#526e66','font-size':11},(m/12).toFixed(1).replace('.0','')+' yr');}
+      add('polyline',{points:data.points.map(p=>x(p.month)+','+y(p.contributed)).join(' '),fill:'none',stroke:'#9b6b28','stroke-width':2,'stroke-dasharray':'5 4'});
+      add('polyline',{points:data.points.map(p=>x(p.month)+','+y(p.balance)).join(' '),fill:'none',stroke:'#22594b','stroke-width':3});
+      add('circle',{cx:x(current.months),cy:y(data.balance),r:5,fill:'#22594b'});
+    }
+    function compare(){
+      const el=$('extra'), valid=el.value!==''&&el.checkValidity();$('extra-error').hidden=valid;
+      if(!valid){$('extra-balance').textContent='—';$('extra-description').textContent='Check the extra deposit.';$('difference').textContent='';return;}
+      const extra=Number(el.value), p=project(current.initial,current.monthly+extra,current.annual,current.months,current.goal);
+      $('base-balance').textContent=money(base.balance);$('base-description').textContent=exactMoney(current.monthly)+'/month · Goal: '+when(base.reached);
+      $('extra-balance').textContent=money(p.balance);$('extra-description').textContent=exactMoney(current.monthly+extra)+'/month · Goal: '+when(p.reached);
+      const earlier=base.reached!==null&&p.reached!==null&&base.reached>p.reached?' You reach the goal '+(base.reached-p.reached)+' months sooner.':base.reached===null&&p.reached!==null?' The extra deposit brings your goal within this time horizon.':'';
+      $('difference').textContent=money(p.balance-base.balance)+' more at the end of '+current.months/12+' years, from '+money(extra*current.months)+' in additional deposits.'+earlier;
+    }
+    function calculate(){
+      if(!$('plan-form').reportValidity())return;
+      current=readPlan();base=project(current.initial,current.monthly,current.annual,current.months,current.goal);
+      needed=Math.ceil((neededDeposit(current.initial,current.goal,current.annual,current.months)-1e-10)*100)/100;
+      $('error').hidden=true;$('results').classList.remove('stale');$('balance').textContent=money(base.balance);
+      $('summary').textContent='After '+current.months/12+' years · '+(base.balance>=current.goal?money(base.balance-current.goal)+' above your goal':money(current.goal-base.balance)+' remaining to your goal');
+      $('status-badge').textContent=base.reached===null?'ROOM TO ADJUST':'GOAL WITHIN REACH';
+      $('contributed').textContent=money(base.contributed);$('interest').textContent=money(base.balance-base.contributed);$('reached').textContent=when(base.reached);
+      $('required-note').textContent=needed===0?'Your starting balance is projected to meet the goal within this horizon without additional deposits.':'To reach '+money(current.goal)+' in '+current.months/12+' years at this rate, the model needs '+exactMoney(needed)+' per month.';
+      $('use-required').hidden=needed>1000000;$('use-required').textContent=needed===0?'Try no monthly deposit':'Use '+exactMoney(needed)+' / month';
+      $('year-table').replaceChildren();for(const p of base.points.filter(p=>p.month>0&&p.month%12===0)){const row=document.createElement('tr');for(const value of [p.month/12,money(p.contributed),money(p.balance-p.contributed),money(p.balance)]){const cell=document.createElement('td');cell.textContent=value;row.append(cell);}$('year-table').append(row);}
+      drawChart(base);compare();
+    }
+    $('plan-form').addEventListener('submit',e=>{e.preventDefault();calculate();});
+    $('plan-form').addEventListener('input',()=>{$('results').classList.add('stale');$('error').textContent='Inputs changed. Calculate your plan to update the results.';$('error').hidden=false;});
+    $('extra').addEventListener('input',compare);
+    $('reset').addEventListener('click',()=>{HTMLFormElement.prototype.reset.call($('plan-form'));$('extra').value='50';calculate();});
+    $('use-required').addEventListener('click',()=>{$('deposit').value=needed.toFixed(2);calculate();});
+    $('download').addEventListener('click',()=>{
+      const rows=['Year,Contributions,Interest,Balance',...base.points.filter(p=>p.month%12===0).map(p=>[p.month/12,p.contributed.toFixed(2),(p.balance-p.contributed).toFixed(2),p.balance.toFixed(2)].join(','))];
+      const url=URL.createObjectURL(new Blob([rows.join('\r\n')],{type:'text/csv;charset=utf-8;'}));const a=document.createElement('a');a.href=url;a.download='goalpath-savings-plan.csv';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+    });
+    calculate();
+  </script>
+</body>
+</html>
